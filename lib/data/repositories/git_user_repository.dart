@@ -24,6 +24,7 @@ class GitUserRepositoryImpl extends GitUserRepository{
 
         var data = response.data;
         List<Items> users = GitHubUserModel.fromJson(data).items!;
+        print('user_lenth ${users.length}');
         return users;
       }else{
         return [];

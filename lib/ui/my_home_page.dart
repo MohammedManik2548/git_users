@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:github_users/bloc/git_user_bloc.dart';
+import 'package:github_users/bloc/git_user_event.dart';
 import 'package:github_users/bloc/git_user_state.dart';
 import 'package:github_users/data/repositories/git_user_repository.dart';
 import 'package:github_users/elements/error.dart';
@@ -12,7 +13,7 @@ class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => GitUserBloc(gitUserRepository: GitUserRepositoryImpl()),
+      create: (context) => GitUserBloc(gitUserRepository: GitUserRepositoryImpl())..add(FetchGitUserEvent()),
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.purple,
@@ -28,15 +29,13 @@ class MyHomePage extends StatelessWidget {
               return buildLoading();
             }else if(state is GitUserLoadedState){
               print('loaded state');
-              return Expanded(
-                child: ListView.builder(
-                  itemCount: state.items.length,
-                    itemBuilder: (context, index){
-                      return ListTile(
-                        title: Text(state.items[index].title.toString()),
-                      );
-                    }
-                ),
+              return ListView.builder(
+                itemCount: state.items.length,
+                  itemBuilder: (context, index){
+                    return ListTile(
+                      title: Text(state.items[index].title.toString()),
+                    );
+                  }
               );
             }else if(state is GitUserErrorState){
               print('error state');

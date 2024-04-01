@@ -9,7 +9,7 @@ class GitUserBloc extends Bloc<GitUserEvent, GitUserState>{
 
   GitUserBloc({required this.gitUserRepository}):super(GitUserLoadingState()){
 
-    on<FetchGutUserEvent>((event, emit)async{
+    on<FetchGitUserEvent>((event, emit)async{
       emit(GitUserLoadingState());
       try{
         List<Items> items = await gitUserRepository.getGitUsers();
